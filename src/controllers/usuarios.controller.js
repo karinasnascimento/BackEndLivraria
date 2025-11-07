@@ -2,13 +2,13 @@ import { db } from "../config/db.js";
 
 export async function criarUsuario(req, res) {
     try {
-        const { nome, email, senha } = req.body;
-        if (!nome || !email || !senha)
+        const { nome, email, senha, data_nascimento, celular, curso, perfil } = req.body;
+        if (!nome || !email || !senha || !data_nascimento || !celular || !curso || !perfil)
             return res.status(400).json({ erro: "Campos obrigatórios" });
 
         await db.execute(
-            "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)",
-            [nome, email, senha]
+            "INSERT INTO usuarios (nome, email, senha, data_nascimento, celular, curso, perfil) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            [nome, email, senha, data_nascimento, celular, curso, perfil]
         );
 
         res.json({ mensagem: "Usuário criado com sucesso!" });
@@ -18,7 +18,7 @@ export async function criarUsuario(req, res) {
 };
 
 
-export async function listaUsuario(req, res) {
+export async function listarUsuarios(req, res) {
     try {
         const [rows] = await db.execute("SELECT * FROM usuarios");
         res.json(rows);
@@ -41,19 +41,18 @@ export async function obterUsuario(req, res) {
     }
 };
 
-export async function atualizaUsuario(req, res) {
+export async function atualizarUsuario(req, res) {
     try {
-        const { nome, email, senha } = req.body;
+        const { nome, email, senha, data_nascimento, celular, curso, perfil } = req.body;
         await db.execute(
-            "UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id = ?",
-            [nome, email, senha, req.params.id]
+            "UPDATE usuarios SET nome = ?, email = ?, senha = ?, data_nascimento = ?, celular = ?, curso = ?, perfil = ? WHERE id = ?",
+            [nome, email, senha, data_nascimento, celular, curso, perfil, req.params.id]
         );
         res.json({ mensagem: "Usuário atualizado com sucesso!" });
     } catch (err) {
         res.status(500).json({ erro: err.message });
     }
 };
-
 
 export async function deletarUsuario(req, res) {
     try {

@@ -1,8 +1,8 @@
 import { 
     criarUsuario, 
     obterUsuario, 
-    listaUsuario, 
-    atualizaUsuario, 
+    listarUsuarios, 
+    atualizarUsuario, 
     deletarUsuario } from "../controllers/usuarios.controller.js";
 
 import express from "express";
@@ -11,10 +11,10 @@ import express from "express";
 //Tranformando todas as funções criadas em uma rota
 const router = express.Router();
 
-router.get("/", listaUsuario);
+router.get("/", listarUsuarios);
 router.post("/", criarUsuario);
 router.get("/:id", obterUsuario);
-router.put("/:id", atualizaUsuario);
+router.put("/:id", atualizarUsuario);
 router.delete("/:id", deletarUsuario);
 
 export default router; //apelidado no controller de "usuariosRouter"
