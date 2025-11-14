@@ -129,3 +129,51 @@ SELECT avaliacoes.nota, usuarios.nome, livros.titulo FROM avaliacoes
 -- ON avaliacoes.usuario_id = usuarios.id
 -- INNER JOIN livros
 -- ON avaliacoes.livro_id = livros.id
+
+-- ===========================================================
+-- TABELA DE RESERVAS
+-- ===========================================================
+CREATE TABLE IF NOT EXISTS reservas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    livro_id INT NOT NULL,
+    data_retirada DATE NOT NULL,
+    data_devolucao DATE NOT NULL,
+    confirmado_email BOOLEAN DEFAULT FALSE,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (livro_id) REFERENCES livros(id) ON DELETE CASCADE
+);
+
+-- Inserção de reservas de exemplo
+INSERT INTO reservas (usuario_id, livro_id, data_retirada, data_devolucao, confirmado_email) VALUES
+('1', '2', '2025/03/01', '2025/03/21', true),
+('3', '1', '2025/04/10', '2025/04/30', false),
+('2', '3', '2025/05/20', '2025/06/09', true);
+
+-- ===========================================================
+-- UNINDO VALORES DAS TABELAS usuarios, livros e reservas
+-- ===========================================================
+SELECT r.id, u.nome, l.titulo, r.data_retirada, r.data_devolucao, r.confirmado_email, r.criado_em FROM reservas r
+INNER JOIN usuarios u
+ON r.usuario_id = u.id
+INNER JOIN livros l
+ON r.livro_id = l.id;
+
+-- ===========================================================
+-- TABELA DE FAVORITOS
+-- ===========================================================
+CREATE TABLE IF NOT EXISTS favoritos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    livro_id INT NOT NULL,
+    data_favoritado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (livro_id) REFERENCES livros(id) ON DELETE CASCADE
+);
+
+-- Inserção de favoritos de exemplo
+INSERT INTO favoritos (usuario_id, livro_id) VALUES
+('1', '2'),
+('3', '1'),
+('2', '3');

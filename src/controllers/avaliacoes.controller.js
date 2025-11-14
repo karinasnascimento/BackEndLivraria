@@ -35,7 +35,7 @@ export async function obterAvaliacao(req, res) {
             req.params.id,
         ]);
         if (rows.length === 0)
-            return res.status(404).json({ erro: "Avaliacao não encontrada" });
+            return res.status(404).json({ erro: "Avaliação não encontrada" });
         res.json(rows[0]);
     } catch (err) {
         res.status(500).json({ erro: err.message });

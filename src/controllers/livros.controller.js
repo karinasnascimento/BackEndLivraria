@@ -47,6 +47,7 @@ export async function obterLivro(req, res) {
     }
 };
 
+
 export async function atualizarLivro(req, res) {
     try {
         const { titulo, autor, genero, editora, ano_publicacao, isbn, idioma, formato, caminho_capa, sinopse, ativo} = req.body;

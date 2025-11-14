@@ -1,2 +1,11 @@
-SELECT titulo, autor, genero, editora, ano_publicacao, isbn, idioma, 
-formato, caminho_capa, sinopse, ativo, criado_em, atualizado_em FROM livros;
+SELECT * FROM favoritos;
+
+SELECT f.id, u.nome, l.titulo, f.data_favoritado FROM favoritos f
+INNER JOIN usuarios u
+ON f.usuario_id = u.id
+INNER JOIN livros l
+ON f.livro_id = l.id;
+
+
+
+SELECT ativo FROM livros WHERE id = 1
